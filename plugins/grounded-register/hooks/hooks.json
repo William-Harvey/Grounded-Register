@@ -1,0 +1,45 @@
+{
+  "description": "Injects the Grounded Register contract and validates register changes before Claude stops.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/scripts/session-start.mjs"],
+            "timeout": 5,
+            "statusMessage": "Loading Grounded Register policy"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/scripts/subagent-start.mjs"],
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/scripts/stop-validate.mjs"],
+            "timeout": 10,
+            "statusMessage": "Validating Grounded Register"
+          }
+        ]
+      }
+    ]
+  }
+}

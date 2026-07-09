@@ -1,0 +1,15 @@
+{
+  "name": "grounded-register-marketplace",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Marketplace and test harness for the Grounded Register Claude Code plugin.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test plugins/grounded-register/tests/*.test.mjs",
+    "lint:json": "node scripts/check-json.mjs",
+    "check": "npm run lint:json && npm test"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

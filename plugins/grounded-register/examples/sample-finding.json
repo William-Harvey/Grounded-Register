@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "id": "GR-20260709-7F3C",
+  "title": "CSV export reader does not apply active snapshot filtering",
+  "finding_type": "latent-bug",
+  "category": "data-integrity",
+  "task_relationship": "incidental",
+  "what": "The CSV export path reads all snapshot rows while the primary report path limits reads to the active snapshot.",
+  "code_paths": [
+    {
+      "path": "src/export/csv_reader.py",
+      "start_line": 118,
+      "end_line": 146,
+      "symbol": "load_export_rows",
+      "commit": "ae315921"
+    }
+  ],
+  "impact": "high",
+  "effort": "S",
+  "priority": "P1",
+  "status": "spotted",
+  "affects": "production",
+  "current_task_relation": "Discovered while changing report layout; export data selection is outside that requested work.",
+  "not_fixed_reason": "The issue is outside scope and does not make the requested layout change unsafe or incorrect.",
+  "evidence": [
+    {
+      "type": "code-path",
+      "reference": "src/export/csv_reader.py:118-146",
+      "observation": "The query contains no active snapshot predicate."
+    },
+    {
+      "type": "reproducible-test",
+      "command": "pytest tests/export/test_csv_snapshot_filter.py -q",
+      "expected": "Only rows from the active snapshot are exported.",
+      "observed": "Rows from two snapshot IDs are returned.",
+      "result": "failed",
+      "observation": "The fixture reproduces cross-snapshot export data."
+    }
+  ],
+  "recommended_next_step": "Scope a focused export-reader correction with a regression test for active snapshot selection.",
+  "created_at": "2026-07-09T13:21:00.000Z",
+  "created_by": "claude-code",
+  "updated_at": "2026-07-09T13:21:00.000Z",
+  "resolution": null
+}

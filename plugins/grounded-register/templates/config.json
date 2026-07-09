@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "register_title": "System Risk & Improvement Register",
+  "findings_path": ".grounded-register/findings",
+  "report_path": "docs/system-risk-improvement-register.md",
+  "strict_stop_validation": true,
+  "require_commit_reference": false,
+  "require_resolution_test": true,
+  "quality_reference_files": []
+}

@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grounded-register.dev/schema/finding.schema.json",
+  "title": "Grounded Register Finding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "title",
+    "finding_type",
+    "category",
+    "task_relationship",
+    "what",
+    "impact",
+    "effort",
+    "priority",
+    "status",
+    "affects",
+    "current_task_relation",
+    "not_fixed_reason",
+    "evidence",
+    "recommended_next_step",
+    "created_at",
+    "created_by",
+    "updated_at"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "id": { "type": "string", "pattern": "^GR-[0-9]{8}-[A-F0-9]{4}$" },
+    "title": { "type": "string", "minLength": 8, "maxLength": 140 },
+    "finding_type": {
+      "enum": ["risk", "improvement", "limitation", "latent-bug"]
+    },
+    "category": {
+      "enum": [
+        "correctness",
+        "data-integrity",
+        "security",
+        "privacy",
+        "compliance",
+        "reliability",
+        "performance",
+        "observability",
+        "maintainability",
+        "genericity",
+        "multilingual",
+        "evaluation",
+        "testing",
+        "accessibility",
+        "developer-experience",
+        "other"
+      ]
+    },
+    "task_relationship": { "enum": ["incidental", "blocking"] },
+    "what": { "type": "string", "minLength": 20 },
+    "code_paths": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "start_line", "end_line"],
+        "properties": {
+          "path": { "type": "string" },
+          "start_line": { "type": "integer", "minimum": 1 },
+          "end_line": { "type": "integer", "minimum": 1 },
+          "symbol": { "type": "string" },
+          "commit": { "type": "string" }
+        }
+      }
+    },
+    "impact": { "enum": ["critical", "high", "moderate"] },
+    "effort": { "enum": ["S", "M", "L"] },
+    "priority": { "enum": ["P0", "P1", "P2", "P3"] },
+    "status": {
+      "enum": ["spotted", "scoped", "planned", "fixed", "accepted", "dismissed"]
+    },
+    "affects": { "enum": ["production", "evaluation", "both"] },
+    "current_task_relation": { "type": "string", "minLength": 12 },
+    "not_fixed_reason": { "type": "string", "minLength": 12 },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["type", "observation"],
+        "properties": {
+          "type": {
+            "enum": [
+              "code-path",
+              "reproducible-test",
+              "trace",
+              "log",
+              "runtime-observation",
+              "documented-invariant"
+            ]
+          },
+          "reference": { "type": "string" },
+          "command": { "type": "string" },
+          "expected": { "type": "string" },
+          "observed": { "type": "string" },
+          "result": { "type": "string" },
+          "observation": { "type": "string", "minLength": 8 }
+        }
+      }
+    },
+    "recommended_next_step": { "type": "string", "minLength": 12 },
+    "created_at": { "type": "string", "format": "date-time" },
+    "created_by": { "type": "string", "minLength": 2 },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "resolution": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "required": ["summary", "verified_at", "verified_by", "evidence"],
+          "properties": {
+            "summary": { "type": "string" },
+            "verified_at": { "type": "string", "format": "date-time" },
+            "verified_by": { "type": "string" },
+            "commit": { "type": "string" },
+            "reason": { "type": "string" },
+            "evidence": { "type": "array", "minItems": 1 }
+          }
+        }
+      ]
+    }
+  }
+}

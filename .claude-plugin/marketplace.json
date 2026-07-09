@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "grounded-register-marketplace",
+  "description": "Evidence-based engineering governance plugins for Claude Code.",
+  "owner": {
+    "name": "William Harvey"
+  },
+  "plugins": [
+    {
+      "name": "grounded-register",
+      "source": "./plugins/grounded-register",
+      "description": "Captures grounded out-of-scope engineering risks and improvements without derailing the current task.",
+      "version": "0.1.0",
+      "category": "development"
+    }
+  ]
+}

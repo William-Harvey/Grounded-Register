@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "grounded-register",
+  "displayName": "Grounded Register",
+  "version": "0.1.0",
+  "description": "An evidence-based system risk and improvement register that preserves important incidental findings without introducing uncontrolled scope drift.",
+  "author": {
+    "name": "William Harvey"
+  },
+  "license": "MIT",
+  "keywords": [
+    "governance",
+    "risk-register",
+    "scope-control",
+    "engineering-memory",
+    "technical-debt",
+    "evidence"
+  ],
+  "homepage": "https://github.com/William-Harvey/grounded-register#readme",
+  "repository": "https://github.com/William-Harvey/grounded-register"
+}
